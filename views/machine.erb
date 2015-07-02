@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Vending Search Results</title>
+<link rel="stylesheet" type="text/css" href="/stylesheets/skeleton.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+
+	<b>Location:</b>
+	<a href="/maps/<%=machine.location%>.gif" class="preview"><%= machine.location %></a><br id="map">
+	<b>Sodexo ID:</b>
+	<%= machine.sxo_id %><br>
+	
+	<br>
+	<b>Drinks available:</b>
+	<ul>
+	<% machine.drinks.order(:name).each do |d| %>
+		<li><%= d.name %></li>
+	<% end %>
+	</ul>
+	
+	<b>Payments available:</b>
+	<ul>
+	<% machine.payments.order(:id).each do |p| %>
+		<li><%= p.name %></li>
+	<% end %>
+	</ul>
+
+	<% if machine.comments.count > 0 %>
+	<b>Comments about this machine:</b>
+		<ul>
+		<% machine.comments.order(:created_at).each do |c| %>
+			<li><%= c.comment %> <em><%= c.pretty_date %></em></li>
+		<% end %>
+		</ul>
+		
+	<form method="post" action="/magellan/machine/<%= machine.id %>">
+	<input type="text" name="comment" value="Add a comment about this machine" onFocus="this.value=''">
+	<input type="submit">
+	</form>
+<br>	
+<form method="get" action="/magellan">
+<input type="submit" value="Search again">
+</form>
+<br>
+
+<% end  %>
+
+
+</body>
+</html>

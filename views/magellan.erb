@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>Search for vending machines</title>
+<link rel="stylesheet" type="text/css" href="/stylesheets/skeleton.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function () {
+    $('#floor').change(function () {
+        if (this.value < 4 ) {
+            $('#old').show();
+        } else {
+            $('#old').hide();
+        }
+    });
+});
+</script>
+</head>
+
+<body>
+<div class="container" align="center">
+<h2>Vending Machine Search</h2>
+
+
+
+<form method="post">
+
+		What's your <a href="/maps/F1.gif" target="_blank" class="preview">location</a>? <br id="map">
+		<select name="floor" id="floor">
+			<option value="1">1st Floor</option>
+			<option value="2">2nd Floor</option>
+			<option value="3">3rd Floor</option>
+			<option value="4">4th Floor</option>
+			<option value="5">5th Floor</option>
+		</select><br>
+		
+		<div id="new">
+		<input type="radio" name="location" value="A6" checked>A6 <input type="radio" name="location" value="B6">B6 <span style="visibility:hidden"><input type="radio" name="location" value="C2">C2 <input type="radio" name="location" value="D2">D2<br></span>
+		<input type="radio" name="location" value="A5">A5 <input type="radio" name="location" value="B5">B5 <span style="visibility:hidden"><input type="radio" name="location" value="C2">C2 <input type="radio" name="location" value="D2">D2<br></span>
+		<input type="radio" name="location" value="A4">A4 <input type="radio" name="location" value="B4">B4 <span style="visibility:hidden"><input type="radio" name="location" value="C2">C2 <input type="radio" name="location" value="D2">D2<br></span>
+		<input type="radio" name="location" value="A3">A3 <input type="radio" name="location" value="B3">B3 <span style="visibility:hidden"><input type="radio" name="location" value="C2">C2 <input type="radio" name="location" value="D2">D2<br></span>
+		</div>
+		
+		<div id="old">
+		<input type="radio" name="location" value="A2">A2 <input type="radio" name="location" value="B2">B2 <input type="radio" name="location" value="C2">C2 <input type="radio" name="location" value="D2">D2<br>
+		<input type="radio" name="location" value="A1">A1 <input type="radio" name="location" value="B1">B1 <input type="radio" name="location" value="C1">C1 <input type="radio" name="location" value="D1">D1<br>
+		</div>
+	<br>
+		
+		<br>
+		Which drink do you want to buy?<br>
+		<select name="drink">
+		<% Drink.all.order(:name).each do |d| %>
+			<option value="<%= d.id %>"><%= d.name %></option>
+		<% end %>
+		</select>
+		<br>
+		
+		How do you want to pay?<br>
+		<select name="payment">
+			<% Payment.all.each do |p| %>
+			<option value="<%= p.id %>"><%= p.name %></option>
+		<% end %>
+		</select>
+		<br>
+		
+		
+<br>
+<input type="submit" value="Search" style="width: 120px"><br><input type="reset" value="Reset"  style="width: 120px"></form>
+<br>
+</div>
+</body>
+</html>
