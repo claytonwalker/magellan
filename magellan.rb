@@ -58,25 +58,6 @@ post '/magellan/machine/:machine' do
 end
 
 
-["/gendec/:flight", "/gendec/:flight/:mod"].each do |path|
-get path do
-	f = Flight.new
-	f.num = params[:flight]
-	f.date = Time.new(Time.now.year, Time.now.month, Time.now.day)
-	f.date += (params[:mod].to_i*60*60*24) unless params[:mod].nil?
-	f.get_flifo
-	f.get_crew
-	if f.dept.nil?
-	then 
-		$log.info "Error displayed: FL#{params[:flight]} #{request.env['REMOTE_ADDR']} #{f.error.to_s}"
-		"Flight #{params[:flight]}: #{f.error} <br><a href=\"/gendec\">Return to form</a>" #need to make a pretty template for this
-	else 
-		$log.info 'GenDec displayed: FL' + params[:flight] + ' ' + f.date.strftime("%Y-%m-%d") + ' ' + request.env['REMOTE_ADDR']
-		erb :gendec, :locals => {:f => f}
-	end
-
-end
-end
 
 
 	
